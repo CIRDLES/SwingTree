@@ -113,11 +113,10 @@ public class SwingTree {
             Method textMethod = node.data.getClass().getMethod("getText", (Class<?>[]) null);
             try {
                 String getText = (String)textMethod.invoke(node.data, (Object[]) null);
-                if (!getText.equals("")) {
-                    obj.put("hover", obj.get("name"));
-                    obj.put("name", getText);
-                }
+                if (!getText.equals(""))
+                    obj.put("label", getText);
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                // supress
             }
         } catch (NoSuchMethodException e) {
         }
