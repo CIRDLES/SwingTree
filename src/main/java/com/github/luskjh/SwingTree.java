@@ -109,6 +109,8 @@ public class SwingTree {
     private JSONObject toJSON(Node<Component> node) {
         JSONObject obj = new JSONObject();
         obj.put("name", node.data.getClass().getSimpleName());
+        obj.put("x", node.data.getLocationOnScreen().getX());
+        obj.put("y", node.data.getLocationOnScreen().getY());
         try {
             Method textMethod = node.data.getClass().getMethod("getText", (Class<?>[]) null);
             try {
