@@ -38,6 +38,7 @@ import org.json.simple.JSONObject;
 public class SwingTree {
     private static Swinger swinger;
     private final Node<Component> internalRepresentation;
+    private long primaryKeyCounter = 0;
     
     public static class Node<T> {
         public T data;
@@ -104,12 +105,14 @@ public class SwingTree {
     }
     
     public JSONObject toJSON() {
+        primaryKeyCounter = 0;
         return toJSON(internalRepresentation);
     }
     
     private JSONObject toJSON(Node<Component> node) {
         JSONObject obj = new JSONObject();
         obj.put("name", node.data.getClass().getSimpleName());
+        obj.put("pk", Long.toString(++primaryKeyCounter));
         try {
             obj.put("x", node.data.getLocationOnScreen().getX());
             obj.put("y", node.data.getLocationOnScreen().getY());
