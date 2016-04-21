@@ -110,14 +110,16 @@ public class SwingTree {
         JSONObject obj = new JSONObject();
         obj.put("name", node.data.getClass().getSimpleName());
         obj.put("pk", Long.toString(++primaryKeyCount));
+        obj.put("width", node.data.getWidth());
+        obj.put("height", node.data.getHeight());
+        
+        // use reflection to see if x, y, and text labels exist
         try {
             obj.put("x", node.data.getLocationOnScreen().getX());
             obj.put("y", node.data.getLocationOnScreen().getY());
         } catch (IllegalComponentStateException e) {
             // supress
         }
-        obj.put("width", node.data.getWidth());
-        obj.put("height", node.data.getHeight());
         try {
             Method textMethod = node.data.getClass().getMethod("getText", (Class<?>[]) null);
             try {
@@ -129,6 +131,8 @@ public class SwingTree {
             }
         } catch (NoSuchMethodException e) {
         }
+        
+        // recursively add children
         if (node.children != null && !node.children.isEmpty()) {
             JSONArray arr = new JSONArray();
             node.children.forEach(n -> {
